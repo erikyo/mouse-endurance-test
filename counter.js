@@ -4,7 +4,10 @@ export function setupCounter() {
   let bestSeriesMillis = Number.MAX_SAFE_INTEGER;
   let totalClicks = 0;
   const pageLoadTime = Date.now();
-
+  // Thsi may change based on the type of mouse used
+  let totalHeating = 0;
+  const MOUSE_HEATING_CONSTANT = 0.428; // TBH those are random numbers HAHA
+  const DEHEATING_CONSTANT = 0.00000006; // ☝️ same as the above
 
   const element = document.querySelector('#counter');
   const bestClickTimeElement = document.querySelector('#best-click-time');
@@ -15,6 +18,7 @@ export function setupCounter() {
   const averageLast3SecondsElement = document.querySelector('#average-last-3-seconds');
   const averageLast10SecondsElement = document.querySelector('#average-last-10-seconds');
   const allTimeAverageElement = document.querySelector('#all-time-average');
+  const heatingElement = document.querySelector('#mouse-heating');
 
   element.addEventListener('click', handleClick);
 
@@ -67,10 +71,35 @@ export function setupCounter() {
     const totalDuration = (Date.now() - pageLoadTime) / 1000; // Duration in seconds
     const allTimeAverage = calculateTotalAverage(totalClicks, totalDuration);
     allTimeAverageElement.innerText = `All time average: ${allTimeAverage} clicks/second`;
+
+    const clickDuration = getClickDuration();
+    const heating = calculateHeating(clickDuration);
+
+    totalHeating += heating;
+
+    heatingElement.innerText = `Mouse Heating: ${totalHeating.toFixed(10)} J`;
+  }
+
+  // Add a cooling loop
+  setInterval(coolMouse, 100);
+  function coolMouse() {
+    // Using a simplistic cooling model: reducing heating every 100ms
+    totalHeating = Math.max(0, totalHeating - DEHEATING_CONSTANT);
+
+    heatingElement.innerText = `Mouse Heating: ${totalHeating.toFixed(10)} J`;
   }
 
   function calculateTotalAverage(clicks, duration) {
     return (clicks / duration).toFixed(2);
+  }
+
+  function getClickDuration() {
+    return clickTimes.length > 0 ? (Date.now() - clickTimes[clickTimes.length - 1]) / 1000 : 0;
+  }
+
+  function calculateHeating(duration) {
+    // Using a simplified model for estimation
+    return MOUSE_HEATING_CONSTANT * Math.pow(duration, 2);
   }
 
   function getLastNSeconds(seconds) {

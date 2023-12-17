@@ -20,13 +20,16 @@ document.querySelector('#app').innerHTML = `
           <div class="counter-box w-full h-20 mb-2 bg-purple-500 p-4 rounded w-full h-12">
             <p id="total-clicks" class="text-xl">total-clicks clicks: 0</p>
           </div>
-          <div class="counter-box w-full h-20 mb-2 bg-pink-500 p-4 rounded w-full h-12">
+          <div class="counter-box w-full h-20 mb-2 bg-orange-500 p-4 rounded w-full h-12">
             <p id="average-last-3-seconds" class="text-xl">Average of the last 3 seconds: 0</p>
           </div>
           <div class="counter-box w-full h-20 mb-2 bg-yellow-500 p-4 rounded w-full h-12">
             <p id="average-last-10-seconds" class="text-xl">Average of the last 10 seconds: 0</p>
           </div>
-          <div class="counter-box w-full h-20 mb-2 500 p-4 rounded">
+          <div class="counter-box w-full h-20 mb-2 bg-red-500 p-4 rounded w-full h-12">
+            <p id="mouse-heating" class="text-xl">Mouse Heating: 0 J</p>
+          </div>
+          <div class="counter-box w-full h-20 mb-2 p-4 rounded">
             <p id="all-time-average" class="text-xl">Average of the last 30 seconds: 0</p>
           </div>
           <p>Press 'r' to reset</p>
